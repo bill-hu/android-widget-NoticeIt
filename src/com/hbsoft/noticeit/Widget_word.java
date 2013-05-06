@@ -20,6 +20,7 @@ public class Widget_word extends AppWidgetProvider {
 	public static ArrayList<String> mNoticeWords=new ArrayList<String>();
 	static int mIndex=0;
 	static Timer mTimer=null;
+	UpdateTimer mUpdateTimer=null;
 	
 	public void onReceive (Context context, Intent intent){
 		Log.d(TAG,"onReceive");
@@ -57,7 +58,8 @@ public class Widget_word extends AppWidgetProvider {
         synchronized(mNoticeWords){
         	if(mTimer==null){
         		mTimer=new Timer();
-        		mTimer.scheduleAtFixedRate(new UpdateTimer(context,appWidgetManager), 1, 10000);
+        		mUpdateTimer=new UpdateTimer(context,appWidgetManager);
+        		mTimer.scheduleAtFixedRate(mUpdateTimer, 1, 10000);
         	   }
         	loadWords(context);
         }
@@ -65,6 +67,16 @@ public class Widget_word extends AppWidgetProvider {
         super.onUpdate(context, appWidgetManager, appWidgetIds);  
     }  
       
+    public void onEnabled(Context context){
+    	if(mTimer!=null)
+    		mTimer.cancel();
+    	    mTimer.scheduleAtFixedRate(mUpdateTimer, 1, 10000);
+    }
+    
+    public void onDisabled(Context context){
+    	if(mTimer!=null)
+    		mTimer.cancel();
+    }
       
     private class UpdateTimer extends TimerTask{  
         RemoteViews remoteViews;  
