@@ -56,13 +56,15 @@ public class Widget_word extends AppWidgetProvider {
             int[] appWidgetIds) {  
         Log.d(TAG,"onUpdate");
         synchronized(mNoticeWords){
-        	if(mTimer==null){
-            	loadWords(context);
-            	mTimer=new Timer();
-        		mUpdateTimer=new UpdateTimer(context,appWidgetManager);
-        		mTimer.scheduleAtFixedRate(mUpdateTimer, 1, 10000);
-        	   }
-        }
+			if (mTimer == null) {
+				loadWords(context);
+			} else {
+				mTimer.cancel();
+			}
+			mTimer = new Timer();
+			mUpdateTimer = new UpdateTimer(context, appWidgetManager);
+			mTimer.scheduleAtFixedRate(mUpdateTimer, 1, 10000);
+		}
 
         super.onUpdate(context, appWidgetManager, appWidgetIds);  
     }  
