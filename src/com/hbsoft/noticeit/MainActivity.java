@@ -4,7 +4,7 @@ package com.hbsoft.noticeit;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
-import android.widget.TextView;
+import android.widget.EditText;
 
 public class MainActivity extends Activity {
 
@@ -27,7 +27,7 @@ public class MainActivity extends Activity {
 		synchronized (Widget_word.mNoticeWords) {
 			Widget_word.loadWords(this);
 
-			TextView v = (TextView) findViewById(R.id.notice_word);
+			EditText v = (EditText) findViewById(R.id.notice_word);
 			if (v != null) {
 				String s = "";
 				for (int i = 0; i < Widget_word.mNoticeWords.size(); i++)
